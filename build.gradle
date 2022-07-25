@@ -18,6 +18,8 @@ dependencies {
 	implementation 'org.codehaus.groovy:groovy'
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 	implementation group: 'org.ngrinder', name: 'ngrinder-groovy', version: '3.5.5'
+	implementation 'com.google.code.gson:gson:2.8.6'
+
 	compileOnly 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
