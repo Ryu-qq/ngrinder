@@ -189,9 +189,9 @@ class OrderTest {
                                         .pg("html5_inicis")
                                         .payMethod("card")
                                         .name(member.getMemberName())
-                                        .amount(1000L)
+                                        .amount(269100L)
                                         .buyerEmail(member.getEmail())
-                                        .buyerName("류상원")
+                                        .buyerName("MOCK")
                                         .buyerTel("01011111111")
                                         .buyerAddr("서울시 용산구 새창로 70 109-2204")
                                         .buyerPostcode("12345")
@@ -199,8 +199,8 @@ class OrderTest {
 
 
         def importPayloadResponseDto =ImportPayloadResponseDto.builder()
-                .impUid("imp_" + UUID.randomUUID().toString().substring(0,13))
-                .paidAmount(10000L)
+                .impUid("mock_" + UUID.randomUUID().toString().substring(0,13))
+                .paidAmount(269100L)
                 .build();
 
         List<Long> cartIds = new ArrayList<>();
@@ -247,9 +247,14 @@ class OrderTest {
                 new NVPair("Content-Type", "application/json;charset=UTF-8")
         ]
 
-        HTTPResponse response3 = request.POST("http://localhost:9000/api/v1/addOrder", jsonString.getBytes(), params)
+        HTTPResponse response = request.POST("http://localhost:9000/api/v1/order", jsonString.getBytes(), params)
 
-
+        if (response.statusCode == 401 || response.statusCode == 403 || response.statusCode == 400 || response.statusCode == 404) {
+            grinder.logger.warn("Warning.  fail {}", response.statusCode)
+        } else {
+            grinder.logger.info("get confirm success {}.", response.getText())
+            assertThat(response.statusCode, is(200))
+        }
 
     }
 
